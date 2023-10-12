@@ -89,7 +89,6 @@ Authorization: Bearer <your-jwt-token>
 |-------|-----|-----------
 |title	|String	|Title of the bookstore
 |name	|String	|name of the bookstore
-|date	|String	|Date of the bookstore
 |location	|String	|Location of the bookstore
 
 - Response:
@@ -121,8 +120,7 @@ Authorization: Bearer <your-jwt-token>
     "id": <bookstore_id>,
     "ownerId": Number,
     "name": String,
-    "loaction": String,
-    "date": String,
+    "loaction": String
   },
 ]
 ```
@@ -144,8 +142,7 @@ Authorization: Bearer <your-jwt-token>
     "id": <bookstore_id>,
     "ownerId": Number,
     "name": String,
-    "loaction": String,
-    "date": String,
+    "loaction": String
   },
 ```
 
@@ -159,9 +156,8 @@ Authorization: Bearer <your-jwt-token>
 
 |Field	|Type	|Description
 |-------|-----|-----------
-|title	|String	|Title of the bookstore
+|ownerId | Number
 |name	|String	|name of the bookstore
-|date	|String	|Date of the bookstore
 |location	|String	|Location of the bookstore
 
 - Response:
@@ -237,8 +233,7 @@ Authorization: Bearer <your-jwt-token>
 ```json 
   {
     "id": <authors_id>,
-    "name": String,
-    "date": String,
+    "name": String
   },
 ```
 
