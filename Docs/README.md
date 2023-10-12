@@ -1,78 +1,423 @@
-# Bookstore Api
+# Api Documentation for Bookstore
 
-this project we'll build a backend application  for Bookstore using `Prisma` and `Supabase` 
+this project we'll build a backend application for Bookstore 
 
-We'll build api which is gonna let the user to make authentication and then add bookstores. also user is able to add book and author
+## Base URL
 
+the base url of all the endpoints is:https://node-deploy-90mu.onrender.com/api
 
-## Set Up The Project With Git
+## Authentication
 
-**Follow these steps to set up and work on your project:**
+All authenticated endpoints require a valid JSON Web Token (JWT) in the Authorization header.
 
-* [ ] Create a forked copy of this project.
-* [ ] Clone your OWN version of the repository (Not Gabi's by mistake!).
-* [ ] Create a new branch: git checkout -b `<firstName-lastName>`.
-* [ ] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
-* [ ] Push commits: git push origin `<firstName-lastName>`.
+Example header:
 
+Authorization: Bearer <token>
+To obtain a token, use the login/signup endpoints.
 
-### Setup
+Note: Replace <token> with the actual JWT token obtained during authentication.
 
-After cloning, Run `npm install`
+## Endpoints
 
- Your prisma has already some schema, you will need to change the `datasource db` inside your `prisma.schema` file to:
+##### Signup
 
- ```
- datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
+- URL: **`/owner/signup`**
+- Method: **`POST`**
+- Description: signup a new owner.
+- Request Body:
+
+| Field    | Type   | Description                |
+| -------- | ------ | -------------------------- |
+| name     | String | name of the owner          |
+| email    | String | Email address of the owner |
+| password | String | Password for the owner     |
+
+- Response:
+  - Status: 200 OK
+  - Content-Type: application/json
+  - Body:
+
+```json
+{
+  "message": "Owner created successfully",
+  "token": "<token>"
 }
- ```
+```
 
-You will need to go ahead and create your model for `owner`
+##### Owner Login
 
-Make sure your models and fields follow this instruction:
+- URL: /owner/login
+- Method: POST
+- Description: Authenticates a owner.
+- Request Body:
 
-1. bookstore - fields: id, ownerId, name, location, created, updated
-2. author - fields: id, name, created, updated.
-3. book - fields: id, authorId, bookstoreId, title, price, image, created, updated.
-4. owner - fields: id, name, email, password, created, updated
+| Field    | Type   | Description                |
+| -------- | ------ | -------------------------- |
+| email    | String | Email address of the owner |
+| password | String | Password of the owner      |
 
-You will also need to copy the code from your last project to complete this project.
+- Response:
+  - Status: 200 OK
+  - Content-Type: application/json
+  - Body:
 
-#### Add authentication
-
-In the `owner` file, add sign-up and login endpoints. The sign-up endpoint should create account for the owner and create a hashed password with `bcrypt` and store the information in the `Supabase` database.
-
-The login endpoint should generate a token you can for the frontend and to authenticate the current user. Use `JSON Web Tokens` or `JWT`.
-
-#### Add Middleware
-
-In the `middleware` folder, add a method to check if the user is authenticated. Use this method to check if user is logged in when making changes to the bookstore.
-
-##### Use Supabase database
-
-Instead of using SQLite database, change to Supabase by following this instruction:
-
-1. Sign up at supabase.com
-2. Create new project
-3. Inside the project you created, go to `Settings` and then click `Databases`
-4. Under `Connection string`, switch to `url` and copy the link.
-5. Create `.env` file in your project's root directory if you already don't have it.
-6. Add `DATABASE_URL='the url you copied'` in the .env file.
-7. Inside `prisma` folder, you will have `prisma.schema` file, change the `datasource` to
-
- ```
- datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
+```json
+{
+  "message": "owner logged in successfully"
+  "token": "<token>"
 }
- ```
+```
+
+#### Request Headers
+Include the JWT token in the 'Authorization' header of the request.
+
+Example:
+
+Authorization: Bearer <your-jwt-token>
 
 
-##### Delete what you don't need.
 
-Delete files such as the `SQLite` database, migrations and other files you don't need before pushing.
+#### Create a new bookstore
+
+- URL: **`/bookstore`**
+- Method: **`POST`**
+- Description: Creates a new bookstore.
+- Authentication: Required
+- Request Body:
+
+|Field	|Type	|Description
+|-------|-----|-----------
+|title	|String	|Title of the bookstore
+|name	|String	|name of the bookstore
+|date	|String	|Date of the bookstore
+|location	|String	|Location of the bookstore
+
+- Response:
+  - Status: 200 OK
+  - Content-Type: application/json
+  - Body:
+
+```json 
+{
+  "message": "bookstore created successfully",
+  "bookstore": new bookstore
+}
+```
+
+#### Get all the bookstore
+
+- URL: **`/bookstore`**
+- Method: **`GET`**
+- Description: Get all the bookstore.
+- Authentication: Required
+- Request Body:
 
 
+#### Response:
+
+```json 
+  [
+  {
+    "id": <bookstore_id>,
+    "ownerId": Number,
+    "name": String,
+    "loaction": String,
+    "date": String,
+  },
+]
+```
+
+
+#### Get the bookstore by id
+
+- URL: **`/bookstore/id`**
+- Method: **`GET`**
+- Description: Get the bookstore by id.
+- Authentication: Required
+- Request Body:
+
+
+#### Response:
+
+```json 
+  {
+    "id": <bookstore_id>,
+    "ownerId": Number,
+    "name": String,
+    "loaction": String,
+    "date": String,
+  },
+```
+
+#### Update the bookstore
+
+- URL: **`/bookstore/id`**
+- Method: **`PUT`**
+- Description: Update the bookstore.
+- Authentication: Required
+- Request URL Parameters:
+
+|Field	|Type	|Description
+|-------|-----|-----------
+|title	|String	|Title of the bookstore
+|name	|String	|name of the bookstore
+|date	|String	|Date of the bookstore
+|location	|String	|Location of the bookstore
+
+- Response:
+  - Status: 200 OK
+  - Content-Type: application/json
+  - Body:
+
+```json 
+{
+  "message": "bookstore Updated successfully",
+  "bookstore":  Updated bookstore
+}
+```
+
+#### Delete the bookstore
+
+- URL: **`/bookstore/id`**
+- Method: **`DELETE`**
+- Description: delete the bookstore.
+- Authentication: Required
+- Request URL Parameters:
+
+|Parameter	|Description
+|-------|-----|
+|id	|id of the bookstore you want delete
+
+- Response:
+  - Status: 200 OK
+  - Content-Type: application/json
+  - Body:
+
+```json 
+{
+  "message": "bookstore deleted successfully"
+}
+```
+
+
+
+<!-- author -->
+
+#### Create a new author
+
+- URL: **`/author`**
+- Method: **`POST`**
+- Description: Creates a new author.
+- Request Body:
+
+|Field	|Type	|Description
+|-------|-----|-----------
+|name	|String	|name of the author
+
+- Response:
+  - Status: 200 OK
+  - Content-Type: application/json
+  - Body:
+
+```json 
+{
+  "message": "author created successfully",
+  "bookstore": new author
+}
+```
+
+#### Get all authors 
+
+- URL: **`/bookstore`**
+- Method: **`GET`**
+- Description: Get all the authors.
+
+#### Response:
+
+```json 
+  {
+    "id": <authors_id>,
+    "name": String,
+    "date": String,
+  },
+```
+
+
+#### Update the authors
+
+- URL: **`/author/id`**
+- Method: **`PUT`**
+- Description: Update the author.
+- Authentication: Required
+- Request URL Parameters:
+
+|Field	|Type	|Description
+|-------|-----|-----------
+|name	|String	|name of the author
+
+- Response:
+  - Status: 200 OK
+  - Content-Type: application/json
+  - Body:
+
+```json 
+{
+  "message": " author Updated successfully",
+  "bookstore":  Updated author
+}
+```
+
+#### delete the author
+
+- URL: **`/author/id`**
+- Method: **`DELETE`**
+- Description: delete the author.
+- Authentication: Required
+- Request URL Parameters:
+
+|Parameter	|Description
+|-------|-----|
+|id	|id of the author you want delete
+
+- Response:
+  - Status: 200 OK
+  - Content-Type: application/json
+  - Body:
+
+```json 
+{
+  "message": "author deleted successfully",
+}
+```
+
+
+<!-- ------------------------->
+#### Create a new book
+
+- URL: **`/book`**
+- Method: **`POST`**
+- Description: Creates a new book.
+- Authentication: Required
+- Request Body:
+
+|Field	|Type	|Description
+|-------|-----|-----------
+|authorId	|number	|id of the author
+|bookstoreId	|number	|id of the bookstore
+|title	|String	|title of the book
+|price	|float	|price  of the book
+|image	|String	|image  of the book
+
+
+
+- Response:
+  - Status: 200 OK
+  - Content-Type: application/json
+  - Body:
+
+```json 
+{
+  "message": "book created successfully",
+  "bookstore": new book
+}
+```
+
+#### Get all the book
+
+- URL: **`/book`**
+- Method: **`GET`**
+- Description: Get all the book.
+- Authentication: Required
+- Request Body:
+
+
+#### Response:
+
+```json 
+  [
+  {
+    "id": <bookstore_id>,
+    "author": Number,
+    "bookstoreId": Number,
+    "title": String,
+    "price": Number,
+    "image": String,
+  },
+]
+```
+
+
+#### Get the book by id
+
+- URL: **`/book/id`**
+- Method: **`GET`**
+- Description: Get the book by id.
+- Authentication: Required
+- Request Body:
+
+
+#### Response:
+
+```json 
+  {
+    "id": <book_id>,
+    "authorId": Number,
+    "bookstoreId": Number,
+    "title": String,
+    "price": Number,
+    "image": String,
+  },
+```
+
+#### Update the book
+
+- URL: **`/book/id`**
+- Method: **`PUT`**
+- Description: Update the book.
+- Authentication: Required
+- Request URL Parameters:
+
+|Field	|Type	|Description
+|-------|-----|-----------
+|authorId	|number	|id of the author
+|bookstoreId	|number	|id of the bookstore
+|title	|String	|title of the book
+|price	|float	|price  of the book
+|image	|String	|image  of the book
+
+
+- Response:
+  - Status: 200 OK
+  - Content-Type: application/json
+  - Body:
+
+```json 
+{
+  "message": "book Updated successfully",
+  "bookstore":  Updated bookstore
+}
+```
+
+#### Delete the book
+
+- URL: **`/book/id`**
+- Method: **`DELETE`**
+- Description: delete the book.
+- Authentication: Required
+- Request URL Parameters:
+
+|Parameter	|Description
+|-------|-----|
+|id	|id of the book you want delete
+
+- Response:
+  - Status: 200 OK
+  - Content-Type: application/json
+  - Body:
+
+```json 
+{
+  "message": "book deleted successfully"
+}
+```
 
