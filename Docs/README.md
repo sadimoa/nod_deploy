@@ -248,7 +248,6 @@ Authorization: Bearer <your-jwt-token>
 - URL: **`/author/id`**
 - Method: **`PUT`**
 - Description: Update the author.
-- Authentication: Required
 - Request URL Parameters:
 
 |Field	|Type	|Description
@@ -272,7 +271,6 @@ Authorization: Bearer <your-jwt-token>
 - URL: **`/author/id`**
 - Method: **`DELETE`**
 - Description: delete the author.
-- Authentication: Required
 - Request URL Parameters:
 
 |Parameter	|Description
@@ -297,7 +295,6 @@ Authorization: Bearer <your-jwt-token>
 - URL: **`/book`**
 - Method: **`POST`**
 - Description: Creates a new book.
-- Authentication: Required
 - Request Body:
 
 |Field	|Type	|Description
@@ -327,7 +324,6 @@ Authorization: Bearer <your-jwt-token>
 - URL: **`/book`**
 - Method: **`GET`**
 - Description: Get all the book.
-- Authentication: Required
 - Request Body:
 
 
@@ -352,7 +348,6 @@ Authorization: Bearer <your-jwt-token>
 - URL: **`/book/id`**
 - Method: **`GET`**
 - Description: Get the book by id.
-- Authentication: Required
 - Request Body:
 
 
@@ -374,7 +369,6 @@ Authorization: Bearer <your-jwt-token>
 - URL: **`/book/id`**
 - Method: **`PUT`**
 - Description: Update the book.
-- Authentication: Required
 - Request URL Parameters:
 
 |Field	|Type	|Description
@@ -403,7 +397,6 @@ Authorization: Bearer <your-jwt-token>
 - URL: **`/book/id`**
 - Method: **`DELETE`**
 - Description: delete the book.
-- Authentication: Required
 - Request URL Parameters:
 
 |Parameter	|Description
