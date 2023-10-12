@@ -76,6 +76,7 @@ Example:
 Authorization: Bearer <your-jwt-token>
 
 
+## Endpoint
 
 #### Create a new bookstore
 
@@ -197,7 +198,8 @@ Authorization: Bearer <your-jwt-token>
 
 
 
-<!-- author -->
+
+## Endpoint
 
 #### Create a new author
 
@@ -284,7 +286,7 @@ Authorization: Bearer <your-jwt-token>
 ```
 
 
-<!-- ------------------------->
+## Endpoint
 #### Create a new book
 
 - URL: **`/book`**
